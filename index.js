@@ -463,7 +463,7 @@
         });
 
         activity.onsuccess = () => {
-          console.log("Activity successfuly handled");
+          console.log("XXX Activity successfuly handled", activity);
           this.renderItems();
         };
 
