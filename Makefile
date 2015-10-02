@@ -1,2 +1,2 @@
 package:
-	zip package.zip index.js manifest.webapp -r icons
+	zip package.zip index.js manifest.json -r icons

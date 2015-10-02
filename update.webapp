@@ -1,0 +1,11 @@
+{
+  "name": "Quick Settings Enhancement",
+  "description": "Adds additional functionalities in Firefox OS quick settings.",
+  "developer": {
+    "name": "begeeben & gasolin"
+  },
+  "package_path": "package.zip",
+  "icons": {
+    "128": "icons/system_126.png"
+  }
+}

@@ -133,9 +133,9 @@
         'config': this.initConfigButton.bind(this)
       };
 
-      if (this.workingItems.indexOf('config') < 0) {
-        this.workingItems.push('config');
-      }
+      // if (this.workingItems.indexOf('config') < 0) {
+      //   this.workingItems.push('config');
+      // }
 
       var btn = null;
       this.workingItems.forEach((item) => {

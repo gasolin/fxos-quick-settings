@@ -1,0 +1,16 @@
+{
+  "manifest_version": 1,
+  "name": "Quick Settings Enhancement",
+  "description": "Adds additional functionalities in Firefox OS quick settings.",
+  "version": "1.0",
+  "author": "begeeben & gasolin",
+  "package_path": "package.zip",
+  "content_scripts": [{
+    "matches": "app://system.gaiamobile.org/index.html",
+    "css": [],
+    "js": ["index.js"]
+  }],
+  "icons": {
+    "128": "icons/system_126.png"
+  }
+}
