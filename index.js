@@ -258,7 +258,7 @@
           console.log('release camera');
           mozCamera.release();
 
-          button.dataset.icon = 'flash-off';
+          button.style.color = '';
           button.dataset.enabled = false;
           button.dataset.l10nId = 'quick-settings-flashlightButton-off';
         } else {
@@ -274,13 +274,13 @@
             console.log('catch', e);
           });
 
-          button.dataset.icon = 'flash-on';
+          button.style.color = '#008EAB';
           button.dataset.enabled = true;
           button.dataset.l10nId = 'quick-settings-flashlightButton-on';
         }
       }
 
-      button.dataset.icon = 'flash-off';
+      button.dataset.icon = 'flash-on';
       button.dataset.enabled = false;
       button.dataset.l10nId = 'quick-settings-flashlightButton-off';
       button.addEventListener('click', onClick);
