@@ -1,6 +1,6 @@
 {
   "name": "Quick Settings Enhancement",
-  "description": "Adds additional functionalities in Firefox OS quick settings, including NFC, Silence Incomming calls, Flashlight, Internet Sharing, Lock Orientation, Power Save Mode, Geolocation, Enable USB Storage, Developer panel configs. Welcome to contribute https://github.com/gasolin/fxos-quick-settings",
+  "description": "Adds missing switches in quick settings menu, including NFC, Flashlight and more. Welcome to contribute https://github.com/gasolin/fxos-quick-settings",
   "developer": {
     "name": "begeeben & gasolin"
   },
