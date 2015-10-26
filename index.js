@@ -178,13 +178,13 @@
       function onVolumeChanged(value) {
         if (value > 14) {
           button.dataset.icon = 'sound-max';
-          button.dataset.l10nId = 'quick-settings-volumeButton-max';
+          //  button.dataset.l10nId = 'quick-settings-volumeButton-max';
         } else if (value < 1) {
           button.dataset.icon = 'mute';
-          button.dataset.l10nId = 'quick-settings-volumeButton-mute';
+          // button.dataset.l10nId = 'quick-settings-volumeButton-mute';
         } else {
           button.dataset.icon = 'sound-min';
-          button.dataset.l10nId = 'quick-settings-volumeButton-min';
+          // button.dataset.l10nId = 'quick-settings-volumeButton-min';
         }
 
         originalVolume = value > 0 ? value : originalVolume;
@@ -200,7 +200,7 @@
 
       button.dataset.icon = 'sound-max';
       // button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-volumeButton-max';
+      // button.dataset.l10nId = 'quick-settings-volumeButton-max';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('audio.volume.notification', '', onVolumeChanged);
@@ -212,11 +212,11 @@
         if (status === 'enabling' || status === 'enabled') {
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-nfcButton-on';
+          // button.dataset.l10nId = 'quick-settings-nfcButton-on';
         } else if (status === 'disabling' || status === 'disabled') {
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-nfcButton-off';
+          // button.dataset.l10nId = 'quick-settings-nfcButton-off';
         }
       }
 
@@ -230,7 +230,7 @@
 
       button.dataset.icon = 'nfc';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-nfcButton-off';
+      // button.dataset.l10nId = 'quick-settings-nfcButton-off';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('nfc.status', undefined, onNfcStatusChanged);
@@ -260,7 +260,7 @@
 
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-flashlightButton-off';
+          // button.dataset.l10nId = 'quick-settings-flashlightButton-off';
         } else {
           console.log('get camera');
           window.navigator.mozCameras.getCamera(cameraId, options)
@@ -276,13 +276,13 @@
 
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-flashlightButton-on';
+          // button.dataset.l10nId = 'quick-settings-flashlightButton-on';
         }
       }
 
       button.dataset.icon = 'flash-on';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-flashlightButton-off';
+      // button.dataset.l10nId = 'quick-settings-flashlightButton-off';
       button.addEventListener('click', onClick);
     },
 
@@ -292,11 +292,11 @@
         if (status) {
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-hotSpotButton-on';
+          // button.dataset.l10nId = 'quick-settings-hotSpotButton-on';
         } else {
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-hotSpotButton-off';
+          // button.dataset.l10nId = 'quick-settings-hotSpotButton-off';
         }
       }
 
@@ -310,7 +310,7 @@
 
       button.dataset.icon = 'tethering';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-hotspotButton-off';
+      // button.dataset.l10nId = 'quick-settings-hotspotButton-off';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('tethering.wifi.enabled', false, onHotSpotStatusChanged);
@@ -322,11 +322,11 @@
         if (status) {
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-orientButton-on';
+          // button.dataset.l10nId = 'quick-settings-orientButton-on';
         } else {
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-orientButton-off';
+          // button.dataset.l10nId = 'quick-settings-orientButton-off';
         }
       }
 
@@ -340,7 +340,7 @@
 
       button.dataset.icon = 'toggle-camera-front';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-orientationButton-off';
+      // button.dataset.l10nId = 'quick-settings-orientationButton-off';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('screen.orientation.lock', false, onOrientationStatusChanged);
@@ -352,11 +352,11 @@
         if (status) {
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-powersaveButton-on';
+          // button.dataset.l10nId = 'quick-settings-powersaveButton-on';
         } else {
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-powersaveButton-off';
+          // button.dataset.l10nId = 'quick-settings-powersaveButton-off';
         }
       }
 
@@ -370,7 +370,7 @@
 
       button.dataset.icon = 'battery-3';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-powersaveButton-off';
+      // button.dataset.l10nId = 'quick-settings-powersaveButton-off';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('powersave.enabled', false, onPowersaveStatusChanged);
@@ -382,11 +382,11 @@
         if (status) {
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-locationButton-on';
+          // button.dataset.l10nId = 'quick-settings-locationButton-on';
         } else {
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-locationButton-off';
+          // button.dataset.l10nId = 'quick-settings-locationButton-off';
         }
       }
 
@@ -400,7 +400,7 @@
 
       button.dataset.icon = 'location';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-locationButton-off';
+      // button.dataset.l10nId = 'quick-settings-locationButton-off';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('geolocation.enabled', false, onLocationStatusChanged);
@@ -412,11 +412,11 @@
         if (status) {
           button.style.color = '#008EAB';
           button.dataset.enabled = true;
-          button.dataset.l10nId = 'quick-settings-umsButton-on';
+          // button.dataset.l10nId = 'quick-settings-umsButton-on';
         } else {
           button.style.color = '';
           button.dataset.enabled = false;
-          button.dataset.l10nId = 'quick-settings-umsButton-off';
+          // button.dataset.l10nId = 'quick-settings-umsButton-off';
         }
       }
 
@@ -430,7 +430,7 @@
 
       button.dataset.icon = 'usb';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-umsButton-off';
+      // button.dataset.l10nId = 'quick-settings-umsButton-off';
       button.addEventListener('click', onClick);
 
       SettingsListener.observe('ums.enabled', false, onLocationStatusChanged);
@@ -449,7 +449,7 @@
 
       button.dataset.icon = 'bug';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-developerButton-off';
+      // button.dataset.l10nId = 'quick-settings-developerButton-off';
       button.addEventListener('click', onClick);
     },
 
@@ -474,7 +474,7 @@
 
       button.dataset.icon = 'addons';
       button.dataset.enabled = false;
-      button.dataset.l10nId = 'quick-settings-configButton-off';
+      // button.dataset.l10nId = 'quick-settings-configButton-off';
       button.addEventListener('click', onClick.bind(this));
     }
   };
