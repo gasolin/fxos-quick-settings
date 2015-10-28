@@ -1,0 +1,11 @@
+{
+  "name": "Quick Settings Enhancement",
+  "description": "Adds missing functionalities in quick settings menu. Welcome to contribute https://github.com/gasolin/fxos-quick-settings",
+  "developer": {
+    "name": "begeeben & gasolin"
+  },
+  "dependencies": {
+    "gulp": "*",
+    "gulp-zip": "*"
+  }
+}
