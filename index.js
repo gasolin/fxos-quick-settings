@@ -178,12 +178,15 @@
       function onVolumeChanged(value) {
         if (value > 14) {
           button.dataset.icon = 'sound-max';
+          button.style.color = '';
           //  button.dataset.l10nId = 'quick-settings-volumeButton-max';
         } else if (value < 1) {
           button.dataset.icon = 'mute';
+          button.style.color = '#008EAB';
           // button.dataset.l10nId = 'quick-settings-volumeButton-mute';
         } else {
           button.dataset.icon = 'sound-min';
+          button.style.color = '';
           // button.dataset.l10nId = 'quick-settings-volumeButton-min';
         }
 
