@@ -78,9 +78,8 @@
 
   var QuickSettings = {
     _elements: {},
-    supportItems: ['nfc', 'volume', 'flashlight', 'hotspot',
-                  'orientation', 'powersave', 'location', 'ums',
-                  'developer'],
+    supportItems: ['nfc', 'volume', 'flashlight', 'hotspot', 'orientation',
+                   'location', 'powersave', 'ums', 'developer'],
     workingItems: [],
 
     initialize: function initialize() {
