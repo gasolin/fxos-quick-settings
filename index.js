@@ -166,6 +166,7 @@
       a.classList.add('icon');
       a.classList.add('bb-button');
       a.setAttribute('role', 'button');
+      a.setAttribute('aria-hidden', 'true');
       li.appendChild(a);
 
       return li;
