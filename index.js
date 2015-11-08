@@ -147,15 +147,23 @@
         this._elements.quickSettingsContainerExtension.appendChild(btn);
       });
 
-      // change settings button per a arrow button
+      // move settings button to extra settings
       this._elements.quickSettingsContainerExtension.appendChild(this._elements.lastButton)
+
+      // change settings button per a arrow button
       var arrowButton = this.createButton('topup');
       arrowButton.firstChild.dataset.icon = 'topup';
       this._elements.quickSettingsContainer.appendChild(arrowButton);
+
+      // init arrow button
       this.initArrowButton(arrowButton);
 
       // catch events that should shrink the expanded settings
       this.initAutoShrinkSettings();
+
+      // cache the number of icon rows in extra settings to calculate
+      // how much the settings must be expanded
+      this._numberOfRows = Math.ceil(this.workingItems.length / 5);
 
       // Add additional li as placeholders to layout buttons correctly
       var fillLi = 5 - this.workingItems.length % 5;
@@ -181,7 +189,7 @@
       a.classList.add('bb-button');
       a.setAttribute('role', 'button');
 
-      // if not the elements raises an visual alarm about missing aria attribute
+      // elements raises an visual alarm about missing aria attribute
       // at least in 2.6
       a.setAttribute('aria-hidden', 'true');
 
@@ -196,7 +204,7 @@
     },
 
     _expandSettings: function () {
-      this._elements.utilityTrayFooter.style.transform = 'translateY(-100%)';
+      this._elements.utilityTrayFooter.style.transform = `translateY(-${this._numberOfRows * 50 }%)`;
       this._elements.utilityTrayFooter.classList.add('open');
     },
 
