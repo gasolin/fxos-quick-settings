@@ -1,0 +1,38 @@
+#utility-tray-footer {
+  z-index: 2 !important;
+  background-color: hsl(0, 0%, 20%);
+  transition: transform 0.2s;
+  transform: translateY(0%);
+}
+
+#utility-tray-grippy {
+  z-index: 3 !important;
+}
+
+#utility-tray {
+  overflow: hidden;
+}
+
+#utility-tray-footer {
+  overflow: visible !important;
+}
+
+#quick-settings > ul > li:last-child {
+  transition: transform 0.2s;
+  transform: rotatez(0deg);
+}
+
+#utility-tray-footer.open #quick-settings > ul > li:last-child {
+  transform: rotatez(180deg);
+}
+
+#utility-tray-footer,
+#utility-tray-footer ul {
+  background-color: hsl(0, 0%, 24%);;
+}
+
+#quick-settings-extension {
+  position: absolute;
+  width: 100%;
+
+}
