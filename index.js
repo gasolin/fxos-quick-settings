@@ -84,7 +84,11 @@
 
     initialize: function initialize() {
       this._elements = {
-        quickSettingsContainer: document.querySelector('#quick-settings > ul'),
+        quickSettingsContainer: (function () {
+          var ul = document.querySelector('#quick-settings > ul');
+          ul.cachedHeight = ul.clientHeight;
+          return ul;
+        }()),
         quickSettingsContainerExtension: (function () {
           var ul = document.createElement('ul');
           ul.id = 'quick-settings-extension';
@@ -199,12 +203,13 @@
     },
 
     _shrinkSettings: function () {
-      this._elements.utilityTrayFooter.style.transform = 'unset';
+      this._elements.utilityTrayFooter.style.transform = 'translateY(0%)';
       this._elements.utilityTrayFooter.classList.remove('open');
     },
 
     _expandSettings: function () {
-      this._elements.utilityTrayFooter.style.transform = `translateY(-${this._numberOfRows * 50 }%)`;
+      var dY = this._numberOfRows * this._elements.quickSettingsContainer.cachedHeight;
+      this._elements.utilityTrayFooter.style.transform = `translateY(-${dY}px)`;
       this._elements.utilityTrayFooter.classList.add('open');
     },
 
