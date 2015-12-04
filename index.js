@@ -78,12 +78,13 @@
 
   var QuickSettings = {
     _elements: {},
-    supportItems: ['nfc', 'volume', 'flashlight', 'hotspot', 'orientation',
-                   'location', 'powersave', 'ums', 'developer'],
+    supportItems: ['nfc', 'volume', 'flashlight', 'hotspot', 'brightness',
+                   'location', 'powersave', 'orientation', 'developer'],
     workingItems: [],
 
     initialize: function initialize() {
       this._elements = {
+        quickSettingsFields: document.querySelector('#quick-settings'),
         quickSettingsContainer: (function () {
           var ul = document.querySelector('#quick-settings > ul');
           ul.cachedHeight = ul.clientHeight;
@@ -136,6 +137,7 @@
         'location': this.initLocationButton,
         'ums': this.initUmsButton,
         'developer': this.initDeveloperButton,
+        'brightness': this.initBrightnessButton.bind(this),
         'config': this.initConfigButton.bind(this)
       };
 
@@ -503,8 +505,83 @@
       button.dataset.enabled = false;
       button.dataset.l10nId = 'quick-settings-umsButton-off';
       button.addEventListener('click', onClick);
-
       SettingsListener.observe('ums.enabled', false, onLocationStatusChanged);
+    },
+
+    // Build the brightness control elements.
+    renderBrightnessControl: function renderBrightnessControl() {
+      var containerEl = document.createElement('div');
+      containerEl.setAttribute('id', 'quick-brightness-container');
+      containerEl.setAttribute('data-time-inserted', Date.now());
+      // Inline styles are icky, but I think injected addon CSS is broken right now.
+      // see: https://developer.mozilla.org/en-US/Firefox_OS/Add-ons#Stylesheets
+      containerEl.setAttribute('style', [
+        'height: 3.5rem;',
+        'margin: 1.5rem 0 0 0;'
+      ].join('\n'));
+
+      // Markup stolen and munged from gaia settings
+      containerEl.innerHTML = [
+        '<label class="range-icons brightness">',
+        '  <span data-icon="moon" aria-hidden="true" style="margin: 0; position: absolute; left: 1.5rem"></span>',
+        '  <input id="quick-brightness-control"',
+        '         style="height: 2.5rem; position: absolute; ',
+        '                background: transparent; border: none; margin: 0 auto;',
+        '                left: 6.25rem; width: calc(100% - 12.5rem)"',
+        '         step="0.01" min="0.1" value="0.5" max="1" type="range">',
+        '  <span data-icon="brightness" aria-hidden="true" style="margin: 0; position: absolute; right: 1.5rem"></span>',
+        '</label>'
+      ].join('\n');
+
+      // Inject the elements into the system app
+      this._elements.utilityTrayFooter.insertBefore(containerEl, this._elements.quickSettingsFields);
+
+      // Wire up an event listener to set brightness on slider change.
+      var sliderEl = document.querySelector('#quick-brightness-control');
+      sliderEl.addEventListener('change', function (ev) {
+        window.navigator.mozSettings.createLock()
+          .set({'screen.brightness': sliderEl.value});
+      });
+    },
+
+    // borrow from https://github.com/lmorchard/fxos-addon-quick-brightness/blob/master/index.js
+    initBrightnessButton: function initBrightnessButton(button) {
+
+      function onStateChanged(status) {
+        // Remove existing control, for when this addon is re-run.
+        var existingContainerEl =
+          document.querySelector('#quick-brightness-container');
+        if (existingContainerEl) {
+          existingContainerEl.parentNode.removeChild(existingContainerEl);
+        }
+
+        if (status) {
+          button.style.color = '';
+          button.dataset.enabled = false;
+          button.dataset.l10nId = 'quick-settings-brightnessButton-off';
+        } else {
+          button.style.color = '#008EAB';
+          button.dataset.enabled = true;
+          button.dataset.l10nId = 'quick-settings-brightnessButton-on';
+          this.renderBrightnessControl();
+        }
+      }
+
+      function onClick() {
+        if (button.dataset.enabled === 'true') {
+          window.navigator.mozSettings.createLock()
+            .set({'screen.automatic-brightness': true});
+        } else {
+          window.navigator.mozSettings.createLock()
+            .set({'screen.automatic-brightness': false});
+        }
+      }
+
+      button.dataset.icon = 'brightness';
+      button.dataset.enabled = false;
+      button.dataset.l10nId = 'quick-settings-brightnessButton-off';
+      button.addEventListener('click', onClick);
+      SettingsListener.observe('screen.automatic-brightness', false, onStateChanged.bind(this));
     },
 
     initDeveloperButton: function initDeveloperButton(button) {
