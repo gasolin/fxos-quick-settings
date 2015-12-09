@@ -1,0 +1,40 @@
+#utility-tray {
+  overflow: hidden;
+}
+
+#utility-tray-footer {
+  transition: transform 0.2s;
+  transform: translateY(0%);
+
+  overflow: visible !important;
+  z-index: 2 !important;
+}
+
+#quick-settings-extension {
+  position: absolute;
+  width: 100%;
+
+}
+
+#utility-tray-grippy {
+  z-index: 3 !important;
+}
+
+/* We need to give a solid background because */
+/* the footer will take place over the notification */
+/* container an would be hard to read the settings */
+#utility-tray-footer,
+#utility-tray-footer ul {
+  background-color: hsl(0, 0%, 24%);;
+}
+
+
+/* spin arrow icon on open */
+#quick-settings-topup {
+  transition: transform 0.2s;
+  transform: rotatez(0deg);
+}
+
+#utility-tray-footer.open #quick-settings-topup {
+  transform: rotatez(180deg);
+}

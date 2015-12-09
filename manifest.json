@@ -6,7 +6,7 @@
   "author": "begeeben & gasolin",
   "content_scripts": [{
     "matches": "app://system.gaiamobile.org/index.html",
-    "css": [],
+    "css": ["styles.css"],
     "js": ["index.js"]
   }],
   "icons": {

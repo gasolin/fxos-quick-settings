@@ -84,8 +84,21 @@
 
     initialize: function initialize() {
       this._elements = {
-        quickSettingsContainer: document.querySelector('#quick-settings > ul'),
-        lastButton: document.querySelector('#quick-settings-full-app').parentNode
+        quickSettingsContainer: (function () {
+          var ul = document.querySelector('#quick-settings > ul');
+          ul.cachedHeight = ul.clientHeight;
+          return ul;
+        }()),
+        quickSettingsContainerExtension: (function () {
+          var ul = document.createElement('ul');
+          ul.id = 'quick-settings-extension';
+          document.querySelector('#quick-settings').appendChild(ul);
+          return ul;
+        }()),
+        lastButton: document.querySelector('#quick-settings-full-app').parentNode,
+        utilityTrayFooter: document.querySelector('#utility-tray-footer'),
+        utilityTrayMotion: document.querySelector('#utility-tray-motion'),
+        notificationsContainer: document.querySelector('#notifications-container'),
       };
 
       this.workingItems = this.supportItems;
@@ -108,16 +121,11 @@
       };
 
       this.renderItems();
+      console.log(this);
     },
 
     renderItems: function renderItems() {
-      this._elements.quickSettingsContainer.style.flexWrap = 'wrap';
-
-      // Remove previously appended buttons if any
-      while (this._elements.lastButton.nextSibling) {
-        this._elements.quickSettingsContainer.removeChild(
-          this._elements.lastButton.nextSibling);
-      }
+      this._elements.quickSettingsContainerExtension.style.flexWrap = 'wrap';
 
       var availableItems = {
         'nfc': this.initNfcButton,
@@ -140,17 +148,35 @@
       this.workingItems.forEach((item) => {
         btn = this.createButton(item);
         availableItems[item].call(this, btn.firstChild);
-        this._elements.quickSettingsContainer.appendChild(btn);
+        this._elements.quickSettingsContainerExtension.appendChild(btn);
       });
+
+      // move settings button to extra settings
+      this._elements.quickSettingsContainerExtension.appendChild(this._elements.lastButton)
+
+      // change settings button per a arrow button
+      var arrowButton = this.createButton('topup');
+      arrowButton.firstChild.dataset.icon = 'topup';
+      this._elements.quickSettingsContainer.appendChild(arrowButton);
+
+      // init arrow button
+      this.initArrowButton(arrowButton);
+
+      // catch events that should shrink the expanded settings
+      this.initAutoShrinkSettings();
+
+      // cache the number of icon rows in extra settings to calculate
+      // how much the settings must be expanded
+      this._numberOfRows = Math.ceil(this.workingItems.length / 5);
 
       // Add additional li as placeholders to layout buttons correctly
       var fillLi = 5 - this.workingItems.length % 5;
       for (i=0; i < fillLi; i++) {
-        this._elements.quickSettingsContainer.appendChild(
+        this._elements.quickSettingsContainerExtension.appendChild(
           document.createElement('li'));
       }
 
-      var allSettings = document.querySelectorAll('#quick-settings > ul > li');
+      var allSettings = document.querySelectorAll('#quick-settings-extension > li');
       for (var i=0; i < allSettings.length; i++) {
         allSettings[i].style.flex = '1 1 20%';
       }
@@ -166,9 +192,53 @@
       a.classList.add('icon');
       a.classList.add('bb-button');
       a.setAttribute('role', 'button');
+
+      // elements raises an visual alarm about missing aria attribute
+      // at least in 2.6
+      a.setAttribute('aria-hidden', 'true');
+
       li.appendChild(a);
 
       return li;
+    },
+
+    _shrinkSettings: function () {
+      this._elements.utilityTrayFooter.style.transform = 'translateY(0%)';
+      this._elements.utilityTrayFooter.classList.remove('open');
+    },
+
+    _expandSettings: function () {
+      var dY = this._numberOfRows * this._elements.quickSettingsContainer.cachedHeight;
+      this._elements.utilityTrayFooter.style.transform = `translateY(-${dY}px)`;
+      this._elements.utilityTrayFooter.classList.add('open');
+    },
+
+    _toggleSettings: function () {
+      if (this._elements.utilityTrayFooter.classList.contains('open')) {
+        this._shrinkSettings();
+      } else {
+        this._expandSettings();
+      }
+    },
+
+    initAutoShrinkSettings: function () {
+      // shrink when closing the utility try
+      this._elements.utilityTrayMotion.addEventListener('tray-motion-state', (event) => {
+        // if the visual effect looks weird change to closed
+        if (event.detail.value === 'closing') {
+          this._shrinkSettings();
+        }
+      }, false);
+
+      // shrink when scroll notification to make visual room
+      this._elements.notificationsContainer.addEventListener('scroll', (event) => {
+        this._shrinkSettings();
+      }, false);
+    },
+
+    initArrowButton: function initArrowButton(button) {
+      // toggle on click arrow button
+      button.addEventListener('click', this._toggleSettings.bind(this));
     },
 
     initVolumeButton: function initVolumeButton(button) {
