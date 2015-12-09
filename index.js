@@ -121,7 +121,6 @@
       };
 
       this.renderItems();
-      console.log(this);
     },
 
     renderItems: function renderItems() {
