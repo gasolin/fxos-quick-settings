@@ -156,13 +156,16 @@
       this._elements.quickSettingsContainerExtension.appendChild(this._elements.lastButton)
 
       // change settings button per a arrow button
-      var arrowButton = this.createButton('topup');
+      var arrowButton = document.querySelector('#quick-settings-topup');
+      if (arrowButton) {
+        arrowButton.parentNode.remove(); //remove li
+      }
+      arrowButton = this.createButton('topup');
       arrowButton.firstChild.dataset.icon = 'topup';
       this._elements.quickSettingsContainer.appendChild(arrowButton);
 
       // init arrow button
       this.initArrowButton(arrowButton);
-
       // catch events that should shrink the expanded settings
       this.initAutoShrinkSettings();
 
