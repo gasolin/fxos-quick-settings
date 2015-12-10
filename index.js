@@ -152,22 +152,7 @@
         this._elements.quickSettingsContainerExtension.appendChild(btn);
       });
 
-      // move settings button to extra settings
-      this._elements.quickSettingsContainerExtension.appendChild(this._elements.lastButton)
-
-      // change settings button per a arrow button
-      var arrowButton = document.querySelector('#quick-settings-topup');
-      if (arrowButton) {
-        arrowButton.parentNode.remove(); //remove li
-      }
-      arrowButton = this.createButton('topup');
-      arrowButton.firstChild.dataset.icon = 'topup';
-      this._elements.quickSettingsContainer.appendChild(arrowButton);
-
-      // init arrow button
-      this.initArrowButton(arrowButton);
-      // catch events that should shrink the expanded settings
-      this.initAutoShrinkSettings();
+      this.arrangeSettingsButton();
 
       // cache the number of icon rows in extra settings to calculate
       // how much the settings must be expanded
@@ -184,6 +169,25 @@
       for (var i=0; i < allSettings.length; i++) {
         allSettings[i].style.flex = '1 1 20%';
       }
+    },
+
+    arrangeSettingsButton: function arrangeSettingsButton() {
+      // move settings button to extra settings
+      this._elements.quickSettingsContainerExtension.appendChild(this._elements.lastButton)
+
+      // change settings button per a arrow button
+      var arrowButton = document.querySelector('#quick-settings-topup');
+      if (arrowButton) {
+        arrowButton.parentNode.remove(); //remove li
+      }
+      arrowButton = this.createButton('topup');
+      arrowButton.firstChild.dataset.icon = 'topup';
+      this._elements.quickSettingsContainer.appendChild(arrowButton);
+
+      // init arrow button
+      this.initArrowButton(arrowButton);
+      // catch events that should shrink the expanded settings
+      this.initAutoShrinkSettings();
     },
 
     // Template:
