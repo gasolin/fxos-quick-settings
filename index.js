@@ -535,7 +535,7 @@
         '         style="height: 2.5rem; position: absolute; ',
         '                background: transparent; border: none; margin: 0 auto;',
         '                left: 6.25rem; width: calc(100% - 12.5rem)"',
-        '         step="0.01" min="0.1" value="0.5" max="1" type="range">',
+        '         step="0.01" min="0.1" max="1" type="range">',
         '  <span data-icon="brightness" aria-hidden="true" style="margin: 0; position: absolute; right: 1.5rem"></span>',
         '</label>'
       ].join('\n');
@@ -548,6 +548,9 @@
       sliderEl.addEventListener('change', function (ev) {
         window.navigator.mozSettings.createLock()
           .set({'screen.brightness': sliderEl.value});
+      });
+      SettingsListener.observe('screen.brightness', 0.5, function(value) {
+        sliderEl.value = value;
       });
     },
 
